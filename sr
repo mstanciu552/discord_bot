@@ -1,0 +1,3 @@
+console.log("Hello from typescript");
+const str : string = "variable in typescript";
+console.log(str);
