@@ -5,10 +5,12 @@ var dotenv = require("dotenv");
 dotenv.config();
 var client = new discord_js_1.Client();
 client.on('message', function (message) {
+    if (message.content === "bot test") {
+    }
     var reply = new discord_js_1.MessageEmbed()
         .setTitle("The bot works")
         .setDescription("You wrote: " + message.content);
-    return message.channel.send(reply);
+    message.channel.send(reply);
     return;
 });
 client.login(process.env.DISCORD_TOKEN);
