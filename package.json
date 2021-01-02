@@ -10,7 +10,8 @@
   "scripts": {
     "build:ts": "tsc --watch",
     "dev": "nodemon dist/index.js",
-    "build": "tsc ./src/index.ts -outDir ./dist/index.js && node dist/index.js"
+    "build": "node dist/index.js",
+    "build:dev": "tsc ./src/index.ts -outDir ./dist/index.js && node dist/index.js"
   },
   "author": "",
   "license": "ISC",
