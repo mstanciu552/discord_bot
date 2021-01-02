@@ -1,21 +1,44 @@
 import { Client, Message, MessageEmbed } from "discord.js";
-import * as dotenv from "dotenv";
-import config from "./config";
+import dotenv from "dotenv";
+import axios from "axios";
+
+// Set up dotenv
 dotenv.config();
 
-console.log(config.COLORS.message);
+// Initialize client
+const client: Client = new Client();
 
-const client = new Client();
-
+// Listen to messages
 client.on("message", (message: Message) => {
-  if (message.content === "bot test") {
-    const reply = new MessageEmbed()
-      .setTitle("The bot works")
-      .setDescription(`You wrote: ${message.content}`);
-
-    return message.channel.send(reply);
+  const content = message.content.split(" ");
+  if (content[0] === "!gif") {
+    const gif = content[1];
+    if (!gif) {
+      axios
+        .get(
+          `https://api.tenor.com/v1/search?key=${process.env.TENOR_KEY}&limit=8`
+        )
+        .then((res) => {
+          const random = Math.floor(
+            Math.random() * Math.floor(res.data.results.length)
+          );
+          return message.channel.send(res.data.results[random].url);
+        })
+        .catch((err) => console.error(err));
+    } else {
+      axios
+        .get(
+          `https://api.tenor.com/v1/search?q=${gif}&key=${process.env.TENOR_KEY}&limit=8`
+        )
+        .then((res) => {
+          const random = Math.floor(
+            Math.random() * Math.floor(res.data.results.length)
+          );
+          return message.channel.send(res.data.results[random].url);
+        })
+        .catch((err) => console.error(err));
+    }
   }
-  return;
 });
 
 client.login(process.env.DISCORD_TOKEN);
