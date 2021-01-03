@@ -8,6 +8,7 @@ dotenv.config();
 // Initialize client
 const client: Client = new Client();
 
+// On ready
 client.on("ready", () => console.log("Bot online"));
 
 // Listen to messages
