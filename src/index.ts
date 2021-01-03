@@ -1,7 +1,8 @@
 import express, { Application } from "express";
-import { Client, Message, MessageEmbed } from "discord.js";
+import { Client, Message } from "discord.js";
 import dotenv from "dotenv";
-import axios from "axios";
+import { gifs } from "./commands/gifs";
+import { anime } from "./commands/anime";
 
 // Set up dotenv
 dotenv.config();
@@ -17,42 +18,11 @@ client.on("ready", () => console.log("Bot online"));
 
 // Listen to messages
 client.on("message", (message: Message) => {
-  const content = message.content.split(" ");
-  if (content[0] === "!gif") {
-    const gif = content[1];
-    if (!gif) {
-      axios
-        .get(
-          `https://api.tenor.com/v1/search?key=${process.env.TENOR_KEY}&limit=8`
-        )
-        .then((res) => {
-          const random = Math.floor(
-            Math.random() * Math.floor(res.data.results.length)
-          );
-          return message.channel.send(res.data.results[random].url);
-        })
-        .catch((_) => {
-          return;
-        });
-    } else {
-      axios
-        .get(
-          `https://api.tenor.com/v1/search?q=${gif}&key=${process.env.TENOR_KEY}&limit=8`
-        )
-        .then((res) => {
-          const random = Math.floor(
-            Math.random() * Math.floor(res.data.results.length)
-          );
-          return message.channel.send(res.data.results[random].url);
-        })
-        .catch((_) => {
-          const reply = new MessageEmbed()
-            .setTitle("No such gif")
-            .setDescription("There is no gif with this subject.");
-          return message.channel.send(reply);
-        });
-    }
-  }
+  // Gif command
+  gifs(message);
+
+  // Anime command
+  anime(message);
 });
 
 client.login(process.env.DISCORD_TOKEN);
