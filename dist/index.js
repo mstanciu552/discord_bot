@@ -17,5 +17,8 @@ client.on("message", (message) => {
     anime_1.anime(message);
 });
 client.login(process.env.DISCORD_TOKEN);
+app.get("/", (_, res) => {
+    return res.send("Bot restarting");
+});
 app.listen(process.env.PORT || 8000, () => console.log(`Server listening on port ${process.env.PORT}`));
 //# sourceMappingURL=index.js.map

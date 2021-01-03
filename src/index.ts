@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response } from "express";
 import { Client, Message } from "discord.js";
 import dotenv from "dotenv";
 import { gifs } from "./commands/gifs";
@@ -26,6 +26,11 @@ client.on("message", (message: Message) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+// Dev no idling
+app.get("/", (_: Request, res: Response) => {
+  return res.send("Bot restarting");
+});
 
 app.listen(process.env.PORT || 8000, () =>
   console.log(`Server listening on port ${process.env.PORT}`)
