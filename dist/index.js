@@ -8,6 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const axios_1 = __importDefault(require("axios"));
 dotenv_1.default.config();
 const client = new discord_js_1.Client();
+client.on("ready", () => console.log("Bot online"));
 client.on("message", (message) => {
     const content = message.content.split(" ");
     if (content[0] === "!gif") {

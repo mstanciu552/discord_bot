@@ -1,4 +1,4 @@
-import { Client, Message, MessageEmbed } from "discord.js";
+import { Client, Message } from "discord.js";
 import dotenv from "dotenv";
 import axios from "axios";
 
@@ -7,6 +7,8 @@ dotenv.config();
 
 // Initialize client
 const client: Client = new Client();
+
+client.on("ready", () => console.log("Bot online"));
 
 // Listen to messages
 client.on("message", (message: Message) => {
