@@ -1,9 +1,13 @@
+import express, { Application } from "express";
 import { Client, Message, MessageEmbed } from "discord.js";
 import dotenv from "dotenv";
 import axios from "axios";
 
 // Set up dotenv
 dotenv.config();
+
+// Initialize app
+const app: Application = express();
 
 // Initialize client
 const client: Client = new Client();
@@ -52,3 +56,7 @@ client.on("message", (message: Message) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+app.listen(process.env.PORT || 8000, () =>
+  console.log(`Server listening on port ${process.env.PORT}`)
+);
