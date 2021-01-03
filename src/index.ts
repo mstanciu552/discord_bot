@@ -1,4 +1,4 @@
-import { Client, Message } from "discord.js";
+import { Client, Message, MessageEmbed } from "discord.js";
 import dotenv from "dotenv";
 import axios from "axios";
 
@@ -27,7 +27,9 @@ client.on("message", (message: Message) => {
           );
           return message.channel.send(res.data.results[random].url);
         })
-        .catch((err) => console.error(err));
+        .catch((_) => {
+          return;
+        });
     } else {
       axios
         .get(
@@ -39,7 +41,12 @@ client.on("message", (message: Message) => {
           );
           return message.channel.send(res.data.results[random].url);
         })
-        .catch((err) => console.error(err));
+        .catch((_) => {
+          const reply = new MessageEmbed()
+            .setTitle("No such gif")
+            .setDescription("There is no gif with this subject.");
+          return message.channel.send(reply);
+        });
     }
   }
 });

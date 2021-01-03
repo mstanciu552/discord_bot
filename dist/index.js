@@ -20,7 +20,9 @@ client.on("message", (message) => {
                 const random = Math.floor(Math.random() * Math.floor(res.data.results.length));
                 return message.channel.send(res.data.results[random].url);
             })
-                .catch((err) => console.error(err));
+                .catch((_) => {
+                return;
+            });
         }
         else {
             axios_1.default
@@ -29,7 +31,12 @@ client.on("message", (message) => {
                 const random = Math.floor(Math.random() * Math.floor(res.data.results.length));
                 return message.channel.send(res.data.results[random].url);
             })
-                .catch((err) => console.error(err));
+                .catch((_) => {
+                const reply = new discord_js_1.MessageEmbed()
+                    .setTitle("No such gif")
+                    .setDescription("There is no gif with this subject.");
+                return message.channel.send(reply);
+            });
         }
     }
 });
