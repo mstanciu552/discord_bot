@@ -39,6 +39,7 @@ export const help = (message: Message) => {
           .setColor(COLORS.help)
           .setTitle("JOKE Command")
           .setDescription(commandList[2])
+      );
     } else {
       message.channel.send(
         new MessageEmbed()
