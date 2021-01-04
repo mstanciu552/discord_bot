@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { gifs } from "./commands/gifs";
 import { anime } from "./commands/anime";
 import { help } from "./commands/help";
+import { manga } from "./commands/manga";
 
 // Set up dotenv
 dotenv.config();
@@ -29,6 +30,9 @@ client.on("message", (message: Message) => {
 
   // Anime command
   anime(message);
+
+  // Manga command
+  manga(message);
 });
 
 client.login(process.env.DISCORD_TOKEN);

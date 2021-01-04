@@ -148,7 +148,7 @@ const anime = (message) => {
                     Accept: "application/vnd.api+json",
                 },
             })
-                .then((res) => {
+                .then(res => {
                 res.data.data.forEach((rec) => {
                     const title = rec.attributes.titles.en;
                     if (title)
@@ -158,7 +158,7 @@ const anime = (message) => {
                     .setTitle("Anime Recommendations")
                     .setDescription(titles.join("\n\n ")));
             })
-                .catch((_) => {
+                .catch(_ => {
                 return message.channel.send(new discord_js_1.MessageEmbed()
                     .setTitle("No recommendations")
                     .setDescription("Unfortunately, we have no recommendations at this time")
@@ -180,8 +180,8 @@ const anime = (message) => {
                     Accept: "application/vnd.api+json",
                 },
             })
-                .then((res) => {
-                const title = res.data.data[0].attributes.titles.en;
+                .then(res => {
+                const title = res.data.data[0].attributes.titles.en_jp;
                 const description = res.data.data[0].attributes.description;
                 const posterImage = res.data.data[0].attributes.posterImage.small;
                 return message.channel.send(new discord_js_1.MessageEmbed()
@@ -190,7 +190,7 @@ const anime = (message) => {
                     .setDescription(description)
                     .setColor(config_js_1.COLORS.random));
             })
-                .catch((_) => {
+                .catch(_ => {
                 return message.channel.send(new discord_js_1.MessageEmbed()
                     .setColor(config_js_1.COLORS.alert)
                     .setTitle("Wrong title")

@@ -9,6 +9,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const gifs_1 = require("./commands/gifs");
 const anime_1 = require("./commands/anime");
 const help_1 = require("./commands/help");
+const manga_1 = require("./commands/manga");
 dotenv_1.default.config();
 const app = express_1.default();
 const client = new discord_js_1.Client();
@@ -17,6 +18,7 @@ client.on("message", (message) => {
     help_1.help(message);
     gifs_1.gifs(message);
     anime_1.anime(message);
+    manga_1.manga(message);
 });
 client.login(process.env.DISCORD_TOKEN);
 app.get("/", (_, res) => {

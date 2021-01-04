@@ -143,7 +143,7 @@ export const anime = (message: Message) => {
             Accept: "application/vnd.api+json",
           },
         })
-        .then((res) => {
+        .then(res => {
           res.data.data.forEach((rec: any) => {
             const title = rec.attributes.titles.en;
             if (title) titles.push(title);
@@ -154,7 +154,7 @@ export const anime = (message: Message) => {
               .setDescription(titles.join("\n\n "))
           );
         })
-        .catch((_) => {
+        .catch(_ => {
           return message.channel.send(
             new MessageEmbed()
               .setTitle("No recommendations")
@@ -180,8 +180,8 @@ export const anime = (message: Message) => {
             Accept: "application/vnd.api+json",
           },
         })
-        .then((res) => {
-          const title = res.data.data[0].attributes.titles.en;
+        .then(res => {
+          const title = res.data.data[0].attributes.titles.en_jp;
           const description = res.data.data[0].attributes.description;
           const posterImage = res.data.data[0].attributes.posterImage.small;
           return message.channel.send(
@@ -192,7 +192,7 @@ export const anime = (message: Message) => {
               .setColor(COLORS.random)
           );
         })
-        .catch((_) => {
+        .catch(_ => {
           return message.channel.send(
             new MessageEmbed()
               .setColor(COLORS.alert)
