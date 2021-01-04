@@ -33,9 +33,12 @@ export const manga = (message: Message) => {
       axios
         .get(`https://kitsu.io/api/edge/manga?filter[text]=${manga}`)
         .then(res => {
-          const title = res.data.data[0].attributes.titles.en_jp;
+          const title = res.data.data[0].attributes.titles.en
+            ? res.data.data[0].attributes.titles.en
+            : res.data.data[0].attributes.titles.en_jp;
           const description = res.data.data[0].attributes.description;
           const posterImage = res.data.data[0].attributes.posterImage.small;
+          console.log(res.data.data[0].attributes.titles);
           return message.channel.send(
             new MessageEmbed()
               .setTitle(title)
