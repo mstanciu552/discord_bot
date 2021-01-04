@@ -9,7 +9,9 @@ const axios_1 = __importDefault(require("axios"));
 const gifs = (message) => {
     const content = message.content.split(" ");
     if (content[0] === "!gif") {
-        const gif = content[1];
+        var gif = content.slice(1).join("");
+        if (content.length === 2)
+            gif = content[1];
         if (!gif) {
             axios_1.default
                 .get(`https://api.tenor.com/v1/search?key=${process.env.TENOR_KEY}&limit=8`)

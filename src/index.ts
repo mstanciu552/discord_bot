@@ -1,8 +1,11 @@
 import express, { Application, Request, Response } from "express";
 import { Client, Message } from "discord.js";
 import dotenv from "dotenv";
+
+// Commands
 import { gifs } from "./commands/gifs";
 import { anime } from "./commands/anime";
+import { help } from "./commands/help";
 
 // Set up dotenv
 dotenv.config();
@@ -18,6 +21,9 @@ client.on("ready", () => console.log("Bot online"));
 
 // Listen to messages
 client.on("message", (message: Message) => {
+  // Help command
+  help(message);
+
   // Gif command
   gifs(message);
 

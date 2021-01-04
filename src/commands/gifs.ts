@@ -4,7 +4,8 @@ import axios from "axios";
 export const gifs = (message: Message) => {
   const content = message.content.split(" ");
   if (content[0] === "!gif") {
-    const gif = content[1];
+    var gif = content.slice(1).join("");
+    if (content.length === 2) gif = content[1];
     if (!gif) {
       axios
         .get(

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Message, MessageEmbed } from "discord.js";
+import { COLORS } from "../config.js";
 
 const list: Array<string> = [
   "1.Naruto+Shippuuden ",
@@ -163,11 +164,11 @@ export const anime = (message: Message) => {
               .setColor("#e74c3c")
           );
         });
-    } else if (anime === "list") {
+    } else if (anime === "list" || anime === "") {
       message.channel.send(
         new MessageEmbed()
           .setTitle("Anime List")
-          .setColor("#ecf0f1")
+          .setColor(COLORS.list)
           .setDescription(list.slice(0, list.length / 2).join("\n"))
           .setFooter(list.slice(list.length / 2).join("\n"))
       );
@@ -188,13 +189,13 @@ export const anime = (message: Message) => {
               .setTitle(title)
               .setImage(posterImage)
               .setDescription(description)
-              .setColor("RANDOM")
+              .setColor(COLORS.random)
           );
         })
         .catch((_) => {
           return message.channel.send(
             new MessageEmbed()
-              .setColor("#e74c3c")
+              .setColor(COLORS.alert)
               .setTitle("Wrong title")
               .setDescription("No such anime found")
           );

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.anime = void 0;
 const axios_1 = __importDefault(require("axios"));
 const discord_js_1 = require("discord.js");
+const config_js_1 = require("../config.js");
 const list = [
     "1.Naruto+Shippuuden ",
     "2.Zero no tsukaima ",
@@ -164,10 +165,10 @@ const anime = (message) => {
                     .setColor("#e74c3c"));
             });
         }
-        else if (anime === "list") {
+        else if (anime === "list" || anime === "") {
             message.channel.send(new discord_js_1.MessageEmbed()
                 .setTitle("Anime List")
-                .setColor("#ecf0f1")
+                .setColor(config_js_1.COLORS.list)
                 .setDescription(list.slice(0, list.length / 2).join("\n"))
                 .setFooter(list.slice(list.length / 2).join("\n")));
         }
@@ -187,11 +188,11 @@ const anime = (message) => {
                     .setTitle(title)
                     .setImage(posterImage)
                     .setDescription(description)
-                    .setColor("RANDOM"));
+                    .setColor(config_js_1.COLORS.random));
             })
                 .catch((_) => {
                 return message.channel.send(new discord_js_1.MessageEmbed()
-                    .setColor("#e74c3c")
+                    .setColor(config_js_1.COLORS.alert)
                     .setTitle("Wrong title")
                     .setDescription("No such anime found"));
             });
