@@ -10,6 +10,7 @@ const gifs_1 = require("./commands/gifs");
 const anime_1 = require("./commands/anime");
 const help_1 = require("./commands/help");
 const manga_1 = require("./commands/manga");
+const dadjoke_1 = require("./commands/dadjoke");
 dotenv_1.default.config();
 const app = express_1.default();
 const client = new discord_js_1.Client();
@@ -19,6 +20,7 @@ client.on("message", (message) => {
     gifs_1.gifs(message);
     anime_1.anime(message);
     manga_1.manga(message);
+    dadjoke_1.dadjokes(message);
 });
 client.login(process.env.DISCORD_TOKEN);
 app.get("/", (_, res) => {

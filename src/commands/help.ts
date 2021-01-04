@@ -4,6 +4,7 @@ import { COLORS } from "../config.js";
 const commandList: Array<string> = [
   "1. !gif [subject]  :   returns a gist related to the <subject> if it exists\n",
   "2. !anime [name | list | rec]  :   returns info about an anime based on the <name> or a list of anime with the <list> parameter or recommendations with <rec> parameter\n",
+  "3. !jk | !joke: return a bad joke",
 ];
 
 export const help = (message: Message) => {
@@ -32,6 +33,12 @@ export const help = (message: Message) => {
           .setTitle("ANIME Command")
           .setDescription(commandList[1])
       );
+    } else if (help === "joke") {
+      message.channel.send(
+        new MessageEmbed()
+          .setColor(COLORS.help)
+          .setTitle("JOKE Command")
+          .setDescription(commandList[2])
     } else {
       message.channel.send(
         new MessageEmbed()

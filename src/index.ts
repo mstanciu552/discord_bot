@@ -7,6 +7,7 @@ import { gifs } from "./commands/gifs";
 import { anime } from "./commands/anime";
 import { help } from "./commands/help";
 import { manga } from "./commands/manga";
+import { dadjokes } from "./commands/dadjoke";
 
 // Set up dotenv
 dotenv.config();
@@ -33,6 +34,9 @@ client.on("message", (message: Message) => {
 
   // Manga command
   manga(message);
+
+  // Dad jokes command
+  dadjokes(message);
 });
 
 client.login(process.env.DISCORD_TOKEN);
