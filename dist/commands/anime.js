@@ -150,7 +150,9 @@ const anime = (message) => {
             })
                 .then(res => {
                 res.data.data.forEach((rec) => {
-                    const title = rec.attributes.titles.en;
+                    const title = rec.attributes.titles.en
+                        ? rec.attributes.titles.en
+                        : rec.attributes.titles.en_jp;
                     if (title)
                         titles.push(title);
                 });
@@ -181,11 +183,16 @@ const anime = (message) => {
                 },
             })
                 .then(res => {
-                const title = res.data.data[0].attributes.titles.en_jp;
+                const title = res.data.data[0].attributes.titles.en
+                    ? res.data.data[0].attributes.titles.en
+                    : res.data.data[0].attributes.titles.en_jp;
                 const description = res.data.data[0].attributes.description;
                 const posterImage = res.data.data[0].attributes.posterImage.small;
+                const status = res.data.data[0].attributes.status === "current"
+                    ? "Ongoing"
+                    : "Finished";
                 return message.channel.send(new discord_js_1.MessageEmbed()
-                    .setTitle(title)
+                    .setTitle(title + "  ----->  " + status)
                     .setImage(posterImage)
                     .setDescription(description)
                     .setColor(config_js_1.COLORS.random));

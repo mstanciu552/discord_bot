@@ -33,9 +33,14 @@ export const manga = (message: Message) => {
       axios
         .get(`https://kitsu.io/api/edge/manga?filter[text]=${manga}`)
         .then(res => {
-          const title = res.data.data[0].attributes.titles.en
-            ? res.data.data[0].attributes.titles.en
-            : res.data.data[0].attributes.titles.en_jp;
+          var title;
+
+          if (res.data.data[0].attributes.titles.en)
+            title = res.data.data[0].attributes.titles.en;
+          else if (res.data.data[0].attributes.titles.en_jp)
+            title = res.data.data[0].attributes.titles.en_jp;
+          else if (res.data.data[0].attributes.titles.en_us)
+            title = res.data.data[0].attributes.titles.en_us;
           const description = res.data.data[0].attributes.description;
           const posterImage = res.data.data[0].attributes.posterImage.small;
           console.log(res.data.data[0].attributes.titles);

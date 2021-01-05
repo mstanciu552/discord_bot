@@ -130,7 +130,7 @@ const list: Array<string> = [
 ];
 
 export const anime = (message: Message) => {
-  const content = message.content.split(" ");
+  const content: Array<string> = message.content.split(" ");
   if (content[0] === "!anime") {
     var anime = content.slice(1).join("-");
     if (content.length === 2) anime = content[1];
@@ -145,7 +145,9 @@ export const anime = (message: Message) => {
         })
         .then(res => {
           res.data.data.forEach((rec: any) => {
-            const title = rec.attributes.titles.en;
+            const title: string = rec.attributes.titles.en
+              ? rec.attributes.titles.en
+              : rec.attributes.titles.en_jp;
             if (title) titles.push(title);
           });
           return message.channel.send(
@@ -181,12 +183,19 @@ export const anime = (message: Message) => {
           },
         })
         .then(res => {
-          const title = res.data.data[0].attributes.titles.en_jp;
-          const description = res.data.data[0].attributes.description;
-          const posterImage = res.data.data[0].attributes.posterImage.small;
+          const title: string = res.data.data[0].attributes.titles.en
+            ? res.data.data[0].attributes.titles.en
+            : res.data.data[0].attributes.titles.en_jp;
+          const description: string = res.data.data[0].attributes.description;
+          const posterImage: string =
+            res.data.data[0].attributes.posterImage.small;
+          const status: string =
+            res.data.data[0].attributes.status === "current"
+              ? "Ongoing"
+              : "Finished";
           return message.channel.send(
             new MessageEmbed()
-              .setTitle(title)
+              .setTitle(title + "  ----->  " + status)
               .setImage(posterImage)
               .setDescription(description)
               .setColor(COLORS.random)
