@@ -8,26 +8,26 @@ const discord_js_1 = require("discord.js");
 const axios_1 = __importDefault(require("axios"));
 const config_js_1 = require("../config.js");
 const manga = (message) => {
-    const content = message.content.split(" ");
-    if (content[0] === "!manga") {
-        const manga = content.slice(1).join("-");
-        if (manga === "rec") {
+    const content = message.content.split(' ');
+    if (content[0] === '!manga') {
+        const manga = content.slice(1).join('-');
+        if (manga === 'rec') {
             var list = [];
             axios_1.default
-                .get("https://kitsu.io/api/edge/trending/manga")
+                .get('https://kitsu.io/api/edge/trending/manga')
                 .then(res => {
                 res.data.data.forEach((item) => {
                     list.push(item.attributes.titles.en_jp);
                 });
                 return message.channel.send(new discord_js_1.MessageEmbed()
-                    .setTitle("Manga Recommendations")
-                    .setDescription(list.join("\n"))
+                    .setTitle('Manga Recommendations')
+                    .setDescription(list.join('\n'))
                     .setColor(config_js_1.COLORS.random));
             })
                 .catch(_ => {
                 return message.channel.send(new discord_js_1.MessageEmbed()
-                    .setTitle("No recommendations")
-                    .setDescription("No recommendations found at this time")
+                    .setTitle('No recommendations')
+                    .setDescription('No recommendations found at this time')
                     .setColor(config_js_1.COLORS.alert));
             });
         }
@@ -44,9 +44,9 @@ const manga = (message) => {
                     title = res.data.data[0].attributes.titles.en_us;
                 const description = res.data.data[0].attributes.description;
                 const posterImage = res.data.data[0].attributes.posterImage.small;
-                console.log(res.data.data[0].attributes.titles);
+                const chapterCount = res.data.data[0].attributes.chapterCount;
                 return message.channel.send(new discord_js_1.MessageEmbed()
-                    .setTitle(title)
+                    .setTitle(title + '\nChapter count: ' + chapterCount)
                     .setDescription(description)
                     .setImage(posterImage)
                     .setColor(config_js_1.COLORS.random));
@@ -54,8 +54,8 @@ const manga = (message) => {
                 .catch(err => {
                 console.error(err);
                 return message.channel.send(new discord_js_1.MessageEmbed()
-                    .setTitle("Not found")
-                    .setDescription("No such manga found")
+                    .setTitle('Not found')
+                    .setDescription('No such manga found')
                     .setColor(config_js_1.COLORS.alert));
             });
         }
