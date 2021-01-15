@@ -1,6 +1,14 @@
 # discord_bot
 Discord bot for maintaining **discord** servers and making chatting with your friends more exciting.
 
+## Available commands
+1. `!help` will show all available commands in the bot
+2. `!gif <name>` will show a gif themed with the name if provided
+3. `!anime <name>` will show descriptions for the provided anime or recommendations if nothing is provided
+4. `!manga <name>` will show descriptions for a specified manga or reccomendations for manga to read
+5. `!dadjokes` will show a dad joke
+
+
 ## Requirements
 - nodejs
 - git
