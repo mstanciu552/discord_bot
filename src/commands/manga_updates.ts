@@ -31,50 +31,54 @@ export const manga_updates = async (message: Message) => {
     const content = message.content.split(' ');
     // if (content.length !== 1) return;
     if (content[0] === '!updates') {
-        // Starting the browser and going to specified page
-        const browser: Browser = await puppeteer.launch();
-        const page: Page = await browser.newPage();
-        await page.goto(url, {
-            waitUntil: 'networkidle2',
-        });
-
-        // Get promises with the data
-        const mangaRaw: ElementHandle<Element>[] = await page.$$(
-            '.content-homepage-item > a'
-        );
-
-        // Extract only what data we want from each element
-        let manga: Array<Object> = []; // Will hold info about a manga if on the main page
-        for (let i = 0; i < mangaRaw.length; i++) {
-            if (mangaRaw[i] === undefined) continue;
-            manga.push({
-                title: await (
-                    await mangaRaw[i].getProperty('title')
-                )?.jsonValue(),
-                href: await (
-                    await mangaRaw[i].getProperty('href')
-                )?.jsonValue(),
-                image: await (
-                    await (await mangaRaw[i].$('img'))?.getProperty('src')
-                )?.jsonValue(),
+        try {
+            // Starting the browser and going to specified page
+            const browser: Browser = await puppeteer.launch();
+            const page: Page = await browser.newPage();
+            await page.goto(url, {
+                waitUntil: 'networkidle2',
             });
+
+            // Get promises with the data
+            const mangaRaw: ElementHandle<Element>[] = await page.$$(
+                '.content-homepage-item > a'
+            );
+
+            // Extract only what data we want from each element
+            let manga: Array<Object> = []; // Will hold info about a manga if on the main page
+            for (let i = 0; i < mangaRaw.length; i++) {
+                if (mangaRaw[i] === undefined) continue;
+                manga.push({
+                    title: await (
+                        await mangaRaw[i].getProperty('title')
+                    )?.jsonValue(),
+                    href: await (
+                        await mangaRaw[i].getProperty('href')
+                    )?.jsonValue(),
+                    image: await (
+                        await (await mangaRaw[i].$('img'))?.getProperty('src')
+                    )?.jsonValue(),
+                });
+            }
+
+            let response: Array<Object> = [];
+
+            // Loops through the first page of new manga and gets any that match the favorites array
+            manga.forEach((m: any) => {
+                if (favorites.includes(m.title))
+                    response.push(`${m.title} -> ${m.href}`);
+            });
+
+            // Return list of title + href
+            message.channel.send(
+                new MessageEmbed()
+                    .setTitle('Updates')
+                    .setDescription(response.join('\n'))
+                    .setColor(COLORS.random)
+            );
+            await browser.close();
+        } catch (err) {
+            console.error(err);
         }
-
-        let response: Array<Object> = [];
-
-        // Loops through the first page of new manga and gets any that match the favorites array
-        manga.forEach((m: any) => {
-            if (favorites.includes(m.title))
-                response.push(`${m.title} -> ${m.href}`);
-        });
-
-        // Return list of title + href
-        message.channel.send(
-            new MessageEmbed()
-                .setTitle('Updates')
-                .setDescription(response.join('\n'))
-                .setColor(COLORS.random)
-        );
-        await browser.close();
     }
 };
