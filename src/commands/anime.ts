@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Message, MessageEmbed } from 'discord.js';
 import { COLORS } from '../config.js';
 
+// Anime List
 const list: Array<string> = [
   '1.Naruto+Shippuuden ',
   '2.Zero no tsukaima ',
@@ -130,9 +131,12 @@ const list: Array<string> = [
 ];
 
 export const anime = (message: Message) => {
+  // Get split command
   const content: Array<string> = message.content.split(' ');
+  // Check for the command type
   if (content[0] === '!anime') {
     var anime = content.slice(1).join('-');
+    // Check for arguments
     if (content.length === 2) anime = content[1];
     if (anime === 'rec') {
       var titles: Array<string> = [];
@@ -144,12 +148,14 @@ export const anime = (message: Message) => {
           },
         })
         .then(res => {
+          // Iterate through response
           res.data.data.forEach((rec: any) => {
             const title: string = rec.attributes.titles.en
               ? rec.attributes.titles.en
               : rec.attributes.titles.en_jp;
             if (title) titles.push(title);
           });
+          // Return reccomendations
           return message.channel.send(
             new MessageEmbed()
               .setTitle('Anime Recommendations')
@@ -157,6 +163,7 @@ export const anime = (message: Message) => {
           );
         })
         .catch(_ => {
+          // Return error for nothing found
           return message.channel.send(
             new MessageEmbed()
               .setTitle('No recommendations')
@@ -167,6 +174,7 @@ export const anime = (message: Message) => {
           );
         });
     } else if (anime === 'list' || anime === '') {
+      // Return anime list
       message.channel.send(
         new MessageEmbed()
           .setTitle('Anime List')
@@ -183,6 +191,7 @@ export const anime = (message: Message) => {
           },
         })
         .then(res => {
+          // Extract neccesary information from response
           const title: string = res.data.data[0].attributes.titles.en
             ? res.data.data[0].attributes.titles.en
             : res.data.data[0].attributes.titles.en_jp;
@@ -205,6 +214,7 @@ export const anime = (message: Message) => {
           );
         })
         .catch(_ => {
+          // Handle nothing found error
           return message.channel.send(
             new MessageEmbed()
               .setColor(COLORS.alert)

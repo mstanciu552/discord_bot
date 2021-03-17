@@ -7,33 +7,33 @@ exports.gifs = void 0;
 const discord_js_1 = require("discord.js");
 const axios_1 = __importDefault(require("axios"));
 const gifs = (message) => {
-    const content = message.content.split(" ");
-    if (content[0] === "!gif") {
-        var gif = content.slice(1).join("");
+    const content = message.content.split(' ');
+    if (content[0] === '!gif') {
+        var gif = content.slice(1).join('');
         if (content.length === 2)
             gif = content[1];
         if (!gif) {
             axios_1.default
                 .get(`https://api.tenor.com/v1/search?key=${process.env.TENOR_KEY}&limit=8`)
-                .then((res) => {
+                .then(res => {
                 const random = Math.floor(Math.random() * Math.floor(res.data.results.length));
                 return message.channel.send(res.data.results[random].url);
             })
-                .catch((_) => {
+                .catch(_ => {
                 return;
             });
         }
         else {
             axios_1.default
                 .get(`https://api.tenor.com/v1/search?q=${gif}&key=${process.env.TENOR_KEY}&limit=8`)
-                .then((res) => {
+                .then(res => {
                 const random = Math.floor(Math.random() * Math.floor(res.data.results.length));
                 return message.channel.send(res.data.results[random].url);
             })
-                .catch((_) => {
+                .catch(_ => {
                 const reply = new discord_js_1.MessageEmbed()
-                    .setTitle("No such gif")
-                    .setDescription("There is no gif with this subject.");
+                    .setTitle('No such gif')
+                    .setDescription('There is no gif with this subject.');
                 return message.channel.send(reply);
             });
         }
