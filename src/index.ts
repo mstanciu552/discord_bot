@@ -43,6 +43,7 @@ client.on('message', (message: Message) => {
     // TODO Add roles
 });
 
+// Login to discord
 client.login(process.env.DISCORD_TOKEN);
 
 // Dev no idling

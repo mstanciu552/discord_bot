@@ -42,32 +42,39 @@ const manga_updates = (message) => __awaiter(void 0, void 0, void 0, function* (
     var _a, _b, _c, _d;
     const content = message.content.split(' ');
     if (content[0] === '!updates') {
-        const browser = yield puppeteer_1.default.launch();
-        const page = yield browser.newPage();
-        yield page.goto(url, {
-            waitUntil: 'networkidle2',
-        });
-        const mangaRaw = yield page.$$('.content-homepage-item > a');
-        let manga = [];
-        for (let i = 0; i < mangaRaw.length; i++) {
-            if (mangaRaw[i] === undefined)
-                continue;
-            manga.push({
-                title: yield ((_a = (yield mangaRaw[i].getProperty('title'))) === null || _a === void 0 ? void 0 : _a.jsonValue()),
-                href: yield ((_b = (yield mangaRaw[i].getProperty('href'))) === null || _b === void 0 ? void 0 : _b.jsonValue()),
-                image: yield ((_d = (yield ((_c = (yield mangaRaw[i].$('img'))) === null || _c === void 0 ? void 0 : _c.getProperty('src')))) === null || _d === void 0 ? void 0 : _d.jsonValue()),
+        try {
+            const browser = yield puppeteer_1.default.launch({
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
             });
+            const page = yield browser.newPage();
+            yield page.goto(url, {
+                waitUntil: 'networkidle2',
+            });
+            const mangaRaw = yield page.$$('.content-homepage-item > a');
+            let manga = [];
+            for (let i = 0; i < mangaRaw.length; i++) {
+                if (mangaRaw[i] === undefined)
+                    continue;
+                manga.push({
+                    title: yield ((_a = (yield mangaRaw[i].getProperty('title'))) === null || _a === void 0 ? void 0 : _a.jsonValue()),
+                    href: yield ((_b = (yield mangaRaw[i].getProperty('href'))) === null || _b === void 0 ? void 0 : _b.jsonValue()),
+                    image: yield ((_d = (yield ((_c = (yield mangaRaw[i].$('img'))) === null || _c === void 0 ? void 0 : _c.getProperty('src')))) === null || _d === void 0 ? void 0 : _d.jsonValue()),
+                });
+            }
+            let response = [];
+            manga.forEach((m) => {
+                if (favorites.includes(m.title))
+                    response.push(`${m.title} -> ${m.href}`);
+            });
+            message.channel.send(new discord_js_1.MessageEmbed()
+                .setTitle('Updates')
+                .setDescription(response.join('\n'))
+                .setColor(config_js_1.COLORS.random));
+            yield browser.close();
         }
-        let response = [];
-        manga.forEach((m) => {
-            if (favorites.includes(m.title))
-                response.push(`${m.title} -> ${m.href}`);
-        });
-        message.channel.send(new discord_js_1.MessageEmbed()
-            .setTitle('Updates')
-            .setDescription(response.join('\n'))
-            .setColor(config_js_1.COLORS.random));
-        yield browser.close();
+        catch (err) {
+            console.error(err);
+        }
     }
 });
 exports.manga_updates = manga_updates;
