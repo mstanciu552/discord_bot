@@ -33,7 +33,9 @@ export const manga_updates = async (message: Message) => {
     if (content[0] === '!updates') {
         try {
             // Starting the browser and going to specified page
-            const browser: Browser = await puppeteer.launch();
+            const browser: Browser = await puppeteer.launch({
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            });
             const page: Page = await browser.newPage();
             await page.goto(url, {
                 waitUntil: 'networkidle2',
