@@ -15,7 +15,7 @@ const list = [
     '5.Sword Art Online+2 ',
     '6.Tokyo Ravens ',
     '7.Rakudai Kishi no Calvary ',
-    "8.Knight's Mage ",
+    "8.Knight's Mage",
     '9.Gakusen Toshi Asterisk ',
     '10.Demon King Daimio ',
     '11.Hundred ',
@@ -118,7 +118,7 @@ const list = [
     '106.Tada-kun wa koi wo shinai',
     '107.Tsuredure Children',
     '108.World Trigger',
-    '109.Yahari  ore no seishun Love comedy wa Machigatteiru',
+    '109.Yahari ore no seishun Love comedy wa Machigatteiru',
     '110.The disastrous life of Saiki K.',
     "111.Problem Children Are Coming ftom Another World aren't they?",
     '112.Kill la kill',
@@ -193,7 +193,11 @@ const anime = (message) => {
                     : 'Finished';
                 const episodeCount = res.data.data[0].attributes.episodeCount;
                 return message.channel.send(new discord_js_1.MessageEmbed()
-                    .setTitle(title + '  :  ' + status + '\nEpisode count: ' + episodeCount)
+                    .setTitle(title +
+                    '  :  ' +
+                    status +
+                    '\nEpisode count: ' +
+                    episodeCount)
                     .setImage(posterImage)
                     .setDescription(description)
                     .setColor(config_js_1.COLORS.random));

@@ -15,8 +15,8 @@ const manga_updates_1 = require("./commands/manga_updates");
 dotenv_1.default.config();
 const app = express_1.default();
 const client = new discord_js_1.Client();
-client.on('ready', () => console.log('Bot online'));
-client.on('message', (message) => {
+client.on("ready", () => console.log("Bot online"));
+client.on("message", (message) => {
     help_1.help(message);
     gifs_1.gifs(message);
     anime_1.anime(message);
@@ -25,8 +25,8 @@ client.on('message', (message) => {
     dadjoke_1.dadjokes(message);
 });
 client.login(process.env.DISCORD_TOKEN);
-app.get('/', (_, res) => {
-    return res.send('Bot restarting');
+app.get("/", (_, res) => {
+    return res.send("Bot restarting");
 });
 app.listen(process.env.PORT || 3030, () => console.log(`Server listening on port ${process.env.PORT || 3030}`));
 //# sourceMappingURL=index.js.map

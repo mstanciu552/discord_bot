@@ -8,21 +8,20 @@ const axios_1 = __importDefault(require("axios"));
 const discord_js_1 = require("discord.js");
 const config_js_1 = require("../config.js");
 const dadjokes = (message) => {
-    const content = message.content.split(' ');
-    if (content[0] === '!joke' || content[0] === '!jk') {
+    const content = message.content.split(" ");
+    if (content[0] === "!joke" || content[0] === "!jk") {
         axios_1.default
-            .get('https://icanhazdadjoke.com/', {
-            headers: { Accept: 'text/plain' },
+            .get("https://icanhazdadjoke.com/", {
+            headers: { Accept: "text/plain" },
         })
-            .then(res => {
-            return message.channel.send(new discord_js_1.MessageEmbed()
-                .setDescription(res.data)
-                .setColor(config_js_1.COLORS.random));
+            .then((res) => {
+            return message.channel.send(new discord_js_1.MessageEmbed().setDescription(res.data).setColor(config_js_1.COLORS.random));
         })
-            .catch(_ => {
+            .catch((err) => {
+            console.log(err.response);
             return message.channel.send(new discord_js_1.MessageEmbed()
-                .setTitle('Error')
-                .setDescription('API not working')
+                .setTitle("Error")
+                .setDescription("API not working")
                 .setColor(config_js_1.COLORS.alert));
         });
     }
